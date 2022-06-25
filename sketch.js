@@ -1,5 +1,7 @@
 //Global variables for images
 var bg, sunR, sunL, s_pan, fan_anim,fan_img,display, g_house_img;
+var1=absorbed1=0
+var2=absorbed2=0
 
 //Global variables for Sprites
 var g_house, pan1,pan2,fan,fan2;
@@ -83,13 +85,25 @@ function draw()
   makeRay();
   
   //Calculate Wattage
-  
+  panel1_voltage=round(absorbed1*0.15)
+  panel2_voltage=round(absorbed2*0.15)
   
   
   
   // Write conditions to start the first fan will be temp should be more than 30 and power_gen > =4.
   //And the second fan will start when temp >= 30 and power_gen >= 4.
-  
+  if (power_gen>= 8 && temp>= 30){
+     fan.changeAnimation("run");
+     temp-=1
+     panel2_voltage-=1
+
+  }
+  if (power_gen>= 4 && temp>= 30){
+    fan2.changeAnimation("run");
+    temp-=0.5
+    panel1_voltage-=1
+
+ }
   
   
   
@@ -118,16 +132,37 @@ function makeRay()
     raysGroup.setLifetimeEach(134)
      
      //Add collision functions and callback functions
-     
-     
+     rayGroup.overlap=(pan1);charge1
+     rayGroup.overlap(pan2);charge2
+     rayGroup.ovarlap(g_house);tem_rise
      
      
    }
   
 }
 //Create function for charge1, charge2 & temp_rise
+function charge1(spriteA)
+{
+    spriteA.remove()
+    absorbed1+=1
+    
+
+}
+function charge2(spriteA)
+{
+    spriteA.remove()
+    absorbed2+=1
 
 
+}
+function tem_rise(spiteA)
+{
+    spriteA.remove()
+    temp+=1
+
+
+    
+}
 
 
 
